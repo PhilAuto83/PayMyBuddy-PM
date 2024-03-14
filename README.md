@@ -4,12 +4,12 @@
 
 `Here the conceptual model of Pay My Buddy App`
 
-![MCD Pay MY Buddy](MCD_PayMyBuddy.png)
+![MCD Pay MY Buddy](mcd-pmb.png)
 
 ## MPD
 
 `Here is the physical model of the app`
 
-![MPD Pay My Buddy](MPD_PayMyBuddy.png)
+![MPD Pay My Buddy](mpd-pmb.png)
 
 
