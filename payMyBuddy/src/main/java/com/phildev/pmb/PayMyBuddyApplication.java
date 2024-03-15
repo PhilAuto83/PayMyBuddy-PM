@@ -1,4 +1,4 @@
-package com.money.payMyBuddy;
+package com.phildev.pmb;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
