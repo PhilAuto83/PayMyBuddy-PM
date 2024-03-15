@@ -17,6 +17,7 @@ VALUES
     ('Bob', 'Cousy','USER','bob.cousy@user.fr','$2a$10$egppM.OoAfk09Lc.maNdtOoi8igd9INuznDIU2nyw7AlefiJ.HOaG'),
     ('Shawna', 'Money','USER','shawna.money@user.fr','$2a$10$egppM.OoAfk09Lc.maNdtOoi8igd9INuznDIU2nyw7AlefiJ.HOaG');
 
+
 CREATE TABLE account(
     id INT NOT NULL PRIMARY KEY,
     balance DOUBLE NOT NULL,
@@ -31,17 +32,12 @@ VALUES
     (4, 100.0);
 
 CREATE TABLE connection(
-    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    sender_account_id INT NOT NULL,
-    recipient_account_id INT NOT NULL,
-    FOREIGN KEY (sender_account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (recipient_account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE
+   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   sender_id INT NOT NULL,
+   recipient_id INT NOT NULL,
+   FOREIGN KEY (sender_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (recipient_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-INSERT INTO connection (sender_account_id, recipient_account_id)
-    VALUES
-        (2, 4);
-
 
 CREATE TABLE transaction(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -50,8 +46,19 @@ CREATE TABLE transaction(
     description VARCHAR(30) NOT NULL,
     amount DOUBLE NOT NULL,
     FOREIGN KEY (connection_id) REFERENCES connection(id) ON DELETE CASCADE ON UPDATE CASCADE
-    );
+);
 INSERT INTO transaction (creation_date, connection_id, description, amount)
-    VALUES
-        (CURRENT_DATE ,1, 'Movie tickets', 20.0);
+VALUES
+    (CURRENT_DATE ,1, 'Movie tickets', 20.0);
+
+INSERT INTO connection (sender_id, recipient_id)
+VALUES
+    (2, 4);
+
+
+
+
+
+
+
 
