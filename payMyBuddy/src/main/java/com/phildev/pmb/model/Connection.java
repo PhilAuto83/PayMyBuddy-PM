@@ -13,11 +13,11 @@ public class Connection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "sender_id")
-    private int senderId;
+    @Column(name = "sender_email")
+    private String senderEmail;
 
-    @Column(name = "recipient_id")
-    private int recipientId;
+    @Column(name = "recipient_email")
+    private String recipientEmail;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -35,21 +35,22 @@ public class Connection {
         this.id = id;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public String getSenderEmail() {
+        return senderEmail;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
     }
 
-    public int getRecipientId() {
-        return recipientId;
+    public String getRecipientEmail() {
+        return recipientEmail;
     }
 
-    public void setRecipientId(int recipientId) {
-        this.recipientId = recipientId;
+    public void setRecipientEmail(String recipientEmail) {
+        this.recipientEmail = recipientEmail;
     }
+
 
     public List<Transaction> getTransactions() {
         return transactions;

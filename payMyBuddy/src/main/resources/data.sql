@@ -33,11 +33,15 @@ VALUES
 
 CREATE TABLE connection(
    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-   sender_id INT NOT NULL,
-   recipient_id INT NOT NULL,
-   FOREIGN KEY (sender_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
-   FOREIGN KEY (recipient_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+   sender_email VARCHAR(30) NOT NULL,
+   recipient_email VARCHAR(30) NOT NULL,
+   FOREIGN KEY (sender_email) REFERENCES user(email) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (recipient_email) REFERENCES user(email) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO connection (sender_email, recipient_email)
+VALUES
+    ('phil.pmb@user.fr', 'shawna.money@user.fr');
 
 CREATE TABLE transaction(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -51,9 +55,7 @@ INSERT INTO transaction (creation_date, connection_id, description, amount)
 VALUES
     (CURRENT_DATE ,1, 'Movie tickets', 20.0);
 
-INSERT INTO connection (sender_id, recipient_id)
-VALUES
-    (2, 4);
+
 
 
 

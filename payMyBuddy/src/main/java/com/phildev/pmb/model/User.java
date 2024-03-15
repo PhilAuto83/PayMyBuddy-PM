@@ -30,7 +30,7 @@ public class User {
             fetch = FetchType.EAGER,
             orphanRemoval = true
     )
-    @JoinColumn(name = "sender_id")
+    @JoinColumn(name = "sender_email")
     private List<Connection> connections;
 
     public int getId() {
