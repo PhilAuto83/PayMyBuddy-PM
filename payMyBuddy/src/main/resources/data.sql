@@ -12,10 +12,10 @@ USE pmb;
 
 INSERT INTO user (firstname, lastname, role, email, password)
 VALUES
-    ('Phil', 'Admin','ADMIN','phil.admin@pmb.fr','$2a$10$6Ne007sU6yj/TaDtNEBFoO8wvbvvw3oujGaga3QMnawj1yNZ5aV1q'),
-    ('Phil', 'Pmb','USER','phil.pmb@user.fr','$2a$10$egppM.OoAfk09Lc.maNdtOoi8igd9INuznDIU2nyw7AlefiJ.HOaG'),
-    ('Bob', 'Cousy','USER','bob.cousy@user.fr','$2a$10$egppM.OoAfk09Lc.maNdtOoi8igd9INuznDIU2nyw7AlefiJ.HOaG'),
-    ('Shawna', 'Money','USER','shawna.money@user.fr','$2a$10$egppM.OoAfk09Lc.maNdtOoi8igd9INuznDIU2nyw7AlefiJ.HOaG');
+    ('Phil', 'Admin','ADMIN','phil.admin@pmb.fr','$2a$10$zFvC9UAxeYJp3dnyv8cHHO0JupOZ6GtlGtAuWbCFzXn4znAShiGym'),
+    ('Phil', 'Pmb','USER','phil.pmb@test.fr','$2a$10$XeE2pyiMLbkJbXz46tzRf.SFSqlyBQAKis0dzL1jRlHMYHvhxME32'),
+    ('Bob', 'Cousy','USER','bob.cousy@test.fr','$2a$10$RdwowuvQO2Y25yyfS/KPxevbKbXNGaLROOk7NMrx7GEkOZRqfRufq'),
+    ('Shawna', 'Money','USER','shawna.money@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O');
 
 
 CREATE TABLE account(
@@ -41,7 +41,7 @@ CREATE TABLE connection(
 
 INSERT INTO connection (sender_email, recipient_email)
 VALUES
-    ('phil.pmb@user.fr', 'shawna.money@user.fr');
+    ('phil.pmb@test.fr', 'shawna.money@test.fr');
 
 CREATE TABLE transaction(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

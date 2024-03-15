@@ -15,6 +15,6 @@ public class PayMyBuddyApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(new BCryptPasswordEncoder().encode("admin"));
+		System.out.println(new BCryptPasswordEncoder().encode("Admin2024@"));
 	}
 }
