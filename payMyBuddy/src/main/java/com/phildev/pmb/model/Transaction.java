@@ -3,6 +3,9 @@ package com.phildev.pmb.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "transaction")
 public class Transaction {
@@ -12,7 +15,7 @@ public class Transaction {
     private int id;
 
     @Column(name = "creation_date")
-    private String creationDate;
+    private LocalDate creationDate;
 
     @Column(name = "connection_id")
     private int connectionId;
@@ -29,11 +32,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
