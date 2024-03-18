@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -23,11 +23,14 @@ public class PayMyBuddySecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests(auth ->{
-            auth.requestMatchers("/pmb/admin").hasRole("ADMIN");
-            auth.requestMatchers("/pmb/user").hasRole("USER");
+            auth.requestMatchers( "/login", "/register","/index").permitAll();
+            auth.requestMatchers("/admin").hasRole("ADMIN");
+            auth.requestMatchers("/home").hasRole("USER");
             auth.anyRequest().authenticated();
-        })
-        .formLogin(Customizer.withDefaults())
+        }).formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home")
+                        .failureUrl("/login?error=true"))
         .build();
     }
 
@@ -41,6 +44,11 @@ public class PayMyBuddySecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
         return authenticationManagerBuilder.build();
+    }
+
+    @Bean
+    WebSecurityCustomizer enableStaticResources(){
+        return (web -> web.ignoring().requestMatchers("/css/**", "js/**","/images/**"));
     }
 
 
