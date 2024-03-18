@@ -10,6 +10,6 @@ public class PayMyBuddyApplication{
 		SpringApplication.run(PayMyBuddyApplication.class, args);
 	}
 
-cd "Onez"
+
 
 }
