@@ -32,10 +32,6 @@ public class PayMyBuddySecurityConfig {
                         .loginPage("/login")
                         .defaultSuccessUrl("/home")
                         .failureUrl("/login?error=true"))
-            .logout(logout-> logout
-                    .logoutUrl("/login?logout=true")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID"))
         .build();
     }
 

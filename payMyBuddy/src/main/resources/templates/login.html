@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pay My Buddy</title>
+    <title>Login</title>
     <link th:href="@{/images/banner.ico}" rel="icon"/>
     <link th:href="@{/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
 </head>
@@ -14,11 +14,17 @@
             <div class="btn-lg col-sm-8 col-md-6 mx-auto my-4 p-2 text-white text-center rounded shadow" style="background-color: limegreen;">
                 Pay My Buddy
             </div>
-            <div th:if="${param.error}" class="alert alert-danger">
+            <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
                 Invalid username or password.
+                <button type="button" class="close" onclick="redirectToLoginPage()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div th:if="${param.logout}" class="alert alert-success">
                 You have been logged out successfully.
+                <button type="button" class="close" onclick="redirectToLoginPage()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="input-group mt-3">
                 <span class="input-group-text p-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-at" viewBox="0 0 16 16">
@@ -47,7 +53,7 @@
         </form>
 
     </div>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/pmb.js}"></script>
   
 </body>
 </html>
