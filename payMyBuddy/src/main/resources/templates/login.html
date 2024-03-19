@@ -11,7 +11,7 @@
 <body>
     <div class="container-fluid">
         <form class="border col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto mt-5 rounded" th:action="@{/login}" method="post">
-            <div class="btn-lg col-sm-8 col-md-6 mx-auto my-4 p-2 text-white text-center rounded shadow" style="background-color: limegreen;">
+            <div class="btn-lg col-sm-8 col-md-6 mx-auto my-4 p-2 text-white text-center rounded shadow mb-2" style="background-color: limegreen;">
                 Pay My Buddy
             </div>
             <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -41,8 +41,14 @@
                   </svg></span>
                 <input class="form-control shadow-sm p-4" type="password" name="password" id="password" placeholder="Password" minlength="8" maxlength="30"/>
               </div>           
-            <div class="row mt-5 p-5">
-                <button type="submit" class="btn btn-primary btn-lg col-sm-8 col-md-6 mx-auto mb-5 shadow font-weight-bold">Login</button>
+            <div class="row mt-5 p-2">
+                <button type="submit" class="btn btn-primary btn-lg col-sm-8 col-md-6 mx-auto mb-2 shadow font-weight-bold">Login</button>
+            </div>
+            <div class="row mt-2 mb-5">
+                <h5 class="bg-secondary-subtle col-10 mx-auto text-center">or login with :</h5>
+                <button class="btn col-6 mx-auto ">
+                    <a href="/oauth2/authorization/google">Google</a>
+                </button>
             </div>
             <div class="row mt-2">
                 <h5 class="text-center text-muted mx-auto font-italic" style="font-size: 1rem">Don't have an account yet?
