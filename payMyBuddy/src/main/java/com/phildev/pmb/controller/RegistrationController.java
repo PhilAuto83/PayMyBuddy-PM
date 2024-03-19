@@ -19,7 +19,7 @@ public class RegistrationController {
     @PostMapping("/register")
     @ResponseBody
     public String createUser(@ModelAttribute User user, Model model){
-        model.addAttribute("firstName", "");
-        return "register-success";
+        model.addAttribute("user", user);
+        return "home";
     }
 }
