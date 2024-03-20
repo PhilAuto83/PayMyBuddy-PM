@@ -12,6 +12,15 @@ public class Account {
 
     private double balance;
 
+    public Account(){
+
+    }
+
+    public Account(int id){
+        this.id=id;
+        this.balance =0.0;
+    }
+
 
     public int getId() {
         return id;

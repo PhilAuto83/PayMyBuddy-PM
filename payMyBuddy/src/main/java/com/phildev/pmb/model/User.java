@@ -2,7 +2,9 @@ package com.phildev.pmb.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,16 +15,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "firstname")
+    @Pattern(regexp ="^[A-Z][a-z]+$", message="Firstname should start with capital letter followed by lowercase letter(s)")
+    @Column(name = "firstname", nullable = false)
     private String firstName;
 
-    @Column(name = "lastname")
+
+    @Pattern(regexp ="^[A-Z][a-z]+$", message="Lastname should start with capital letter followed by lowercase letter(s)")
+    @Column(name = "lastname", nullable = false)
     private String lastName;
 
+
+    @Column(name = "role", nullable = false)
     private String role;
 
+    @Pattern(regexp="^[\\w.-]+@[a-zA-Z\\d.-]+.[a-zA-Z]{2,6}$", message="Invalid email format")
+    @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
     @OneToMany(
@@ -32,6 +42,11 @@ public class User {
     )
     @JoinColumn(name = "sender_email")
     private List<Connection> connections;
+
+    public User(){
+        this.role = "USER";
+        this.connections = new ArrayList<>();
+    }
 
     public int getId() {
         return id;

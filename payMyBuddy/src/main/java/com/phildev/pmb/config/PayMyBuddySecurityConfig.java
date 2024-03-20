@@ -24,7 +24,7 @@ public class PayMyBuddySecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests(auth ->{
-            auth.requestMatchers( "/login", "/register","/index").permitAll();
+            auth.requestMatchers( "/login", "/register","/index", "/registration-success").permitAll();
             auth.requestMatchers("/admin").hasRole("ADMIN");
             auth.requestMatchers("/home").hasRole("USER");
             auth.anyRequest().authenticated();
