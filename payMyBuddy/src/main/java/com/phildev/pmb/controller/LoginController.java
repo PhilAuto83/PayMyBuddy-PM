@@ -6,11 +6,15 @@ import com.phildev.pmb.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -26,15 +30,20 @@ public class LoginController {
     }
 
     @GetMapping("/login-check")
-    public String checkExistingUser(Principal principal, Model model){
-        User user = userService.findUserByEmail(principal.getName());
-        model.addAttribute("user", user);
-        if(user !=null){
-            return "home";
+    public String checkExistingUser(@AuthenticationPrincipal OidcUser oidcUser, Model model){
+        Map<String, Object> claims = oidcUser.getAttributes();
+        String email = (String) claims.get("email");
+        if(email != null){
+            if(userService.findUserByEmail(email)!= null){
+                model.addAttribute("user", claims.get("name"));
+                return "home";
+            }
+
+            logger.error("User with email {} does not exist in Pay My Buddy app.", email);
+            model.addAttribute("email", email);
+            return "403";
         }
-        model.addAttribute("userNotFound", String.format("No user found with email %s in the application", principal.getName()));
-        logger.error("User does not exist in Pay My Buddy app with email : {}", principal.getName());
-        return "login-check";
+       return "403";
     }
 
     @GetMapping("/home")
