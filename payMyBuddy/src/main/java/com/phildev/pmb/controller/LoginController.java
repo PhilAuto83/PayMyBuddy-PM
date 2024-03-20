@@ -43,6 +43,8 @@ public class LoginController {
             model.addAttribute("email", email);
             return "403";
         }
+        logger.error("User with email {} does not exist in Pay My Buddy app.", email);
+        model.addAttribute("email", email);
        return "403";
     }
 

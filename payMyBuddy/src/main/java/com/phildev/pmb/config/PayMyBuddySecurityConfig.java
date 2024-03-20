@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 @Configuration
 @EnableWebSecurity
 public class PayMyBuddySecurityConfig {
@@ -24,13 +26,13 @@ public class PayMyBuddySecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests(auth ->{
-            auth.requestMatchers( "/login", "/register","/index", "/registration-success").permitAll();
+            auth.requestMatchers( "/login", "/register","/index", "/registration-success","/login-check", "403").permitAll();
             auth.requestMatchers("/admin").hasRole("ADMIN");
             auth.requestMatchers("/home").hasRole("USER");
             auth.anyRequest().authenticated();
         }).formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .successHandler(new CustomSuccessHandler())
                         .failureUrl("/login?error=true"))
                 .oauth2Login(form-> form
                         .loginPage("/login")
