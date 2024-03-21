@@ -62,8 +62,8 @@ public class RegistrationController {
             return "register";
         }
         logger.info("User {} has been saved in database.", user.getFirstName()+" "+user.getLastName());
-        accountService.save(new Account(user.getId()));
-        logger.info("Account with id {} has been created in database", user.getId());
+        Account account = accountService.save(new Account(user.getId()));
+        logger.info("Account with id {} has been created in database", account.getId());
         return "registration-success";
     }
 }
