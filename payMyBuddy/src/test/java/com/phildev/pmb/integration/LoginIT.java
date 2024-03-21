@@ -1,4 +1,4 @@
-package com.phildev.pmb.controller;
+package com.phildev.pmb.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,12 @@ import static org.springframework.security.test.web.servlet.response.SecurityMoc
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ProfileValueSourceConfiguration
-public class LoginControllerTest {
+public class LoginIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -33,24 +32,24 @@ public class LoginControllerTest {
 
     @Test
     public void userLoginTestShouldReturn200() throws Exception {
-        mockMvc.perform(formLogin("/login").user("test.pmb@test.fr").password("Test2024@")).andExpect(authenticated());
+        mockMvc.perform(formLogin("/login").user("test.pmb@test.fr").password("Test2024@"))
+                .andDo(print())
+                .andExpect(redirectedUrl("/home"));
     }
 
     @Test
-    @WithMockUser(roles ={"ADMIN"}, username = "admin@test.fr", password = "admin")
     public void adminUserShouldReturn200() throws Exception {
-        mockMvc.perform(formLogin("/login").user("admin@test.fr").password("admin")).andExpect(authenticated());
+        mockMvc.perform(formLogin("/login").user("joe.admin@pmb.fr").password("Admin2024@"))
+                .andDo(print())
+                .andExpect(status().is(302))
+                .andExpect(redirectedUrl("/admin"));
     }
-
-    @Test
-    public void realAdminUserShouldReturn200() throws Exception {
-        mockMvc.perform(formLogin("/login").user("joe.admin@pmb.fr").password("Admin2024@")).andExpect(authenticated());
-    }
-
 
     @Test
     public void userLoginFailed() throws Exception {
-        mockMvc.perform(formLogin("/login").user("test.p@test.fr").password("Test20211@")).andExpect(unauthenticated());
+        mockMvc.perform(formLogin("/login").user("test.p@test.fr").password("Test20211@"))
+                .andDo(print())
+                .andExpect(redirectedUrl("/login?error=true"));
     }
 
     @Test
@@ -58,8 +57,11 @@ public class LoginControllerTest {
     public void userLandOnHomePage() throws Exception {
         mockMvc.perform(get("/home"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("<title>Home</title>")));
-    }
+                .andExpect(content().string(containsString("<title>Home</title>")))
+                 .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().string(containsString("Welcome Test,</h2>")));
+            }
 
     @Test
     @WithMockUser(username = "test.pmb@test.fr")

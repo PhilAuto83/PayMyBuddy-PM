@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class RegistrationController {
 
 
     @PostMapping("/register")
-    public String createUser(@ModelAttribute User user, Model model){
+    public String createUser(@ModelAttribute User user, Model model) throws Exception {
         model.addAttribute("user", user);
         User userSaved;
         try {
