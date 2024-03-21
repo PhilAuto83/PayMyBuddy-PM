@@ -48,6 +48,14 @@ public class User {
         this.connections = new ArrayList<>();
     }
 
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = "USER";
+        this.email = email;
+        this.password = password;
+    }
+
     public int getId() {
         return id;
     }

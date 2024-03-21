@@ -1,7 +1,11 @@
 package com.phildev.pmb.service;
 
 import com.phildev.pmb.model.User;
+import com.phildev.pmb.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
@@ -11,6 +15,9 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
 
 
@@ -36,6 +43,57 @@ public class UserServiceTest {
     public void testNoUserFoundByEmail(){
         User user = userService.findUserByEmail("je.admin@pmb.fr");
         Assert.isNull(user, "no user found");
+    }
 
+    @Test
+    public void testUserSavedMethod(){
+        User user = new User();
+        user.setFirstName("Test");
+        user.setLastName("Testy");
+        user.setEmail("testy@test.fr");
+        user.setPassword("Test@6666");
+        userService.save(user);
+        User userInDb = userRepository.findByEmail("testy@test.fr");
+        Assertions.assertEquals(user.getEmail(), userInDb.getEmail());
+    }
+
+    @Test
+    public void testExceptionForExistingEmail(){
+        User user = new User();
+        user.setFirstName("Test");
+        user.setLastName("Testy");
+        user.setEmail("test.pmb@test.fr");
+        user.setPassword("Test@6666");
+        Assertions.assertThrows(RuntimeException.class, () -> userService.save(user) );
+    }
+
+    @Test
+    public void testExceptionForExistingUser(){
+        User user = new User();
+        user.setFirstName("Test");
+        user.setLastName("Pmb");
+        user.setEmail("tst.pmb@test.fr");
+        user.setPassword("Test@6666");
+        Assertions.assertThrows(RuntimeException.class, () -> userService.save(user) );
+    }
+
+   @Test
+    public void testExceptionForPasswordWithoutCapitalLetter(){
+        User user = new User();
+        user.setFirstName("Test");
+        user.setLastName("Testy");
+        user.setEmail("testy@test.fr");
+        user.setPassword("test@6666");
+        Assertions.assertThrows(RuntimeException.class, () -> userService.save(user));
+    }
+
+    @Test
+    public void testExceptionForPasswordWithoutAuthorizedSpecialCharacter(){
+        User user = new User();
+        user.setFirstName("Test");
+        user.setLastName("Testy");
+        user.setEmail("testy@test.fr");
+        user.setPassword("Test/6666");
+        Assertions.assertThrows(RuntimeException.class, () -> userService.save(user) );
     }
 }

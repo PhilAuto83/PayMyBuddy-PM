@@ -34,10 +34,10 @@ public class PayMyBuddySecurityConfig {
                         .loginPage("/login")
                         .successHandler(new CustomSuccessHandler())
                         .failureUrl("/login?error=true"))
-                .oauth2Login(form-> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/login-check")
-                        .failureUrl("/login?error=true"))
+            .oauth2Login(form-> form
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/login-check")
+                    .failureUrl("/login?error=true"))
         .build();
     }
 

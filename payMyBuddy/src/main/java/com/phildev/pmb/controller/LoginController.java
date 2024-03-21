@@ -35,7 +35,7 @@ public class LoginController {
         String email = (String) claims.get("email");
         if(email != null){
             if(userService.findUserByEmail(email)!= null){
-                model.addAttribute("user", oidcUser);
+                model.addAttribute("oidcUser", oidcUser.getGivenName());
                 return "home";
             }
 
@@ -43,13 +43,13 @@ public class LoginController {
             model.addAttribute("email", email);
             return "403";
         }
-        logger.error("User with does not exist in Pay My Buddy app");
+        logger.error("User does not exist in Pay My Buddy app");
 
        return "403";
     }
 
     @GetMapping("/home")
-    public String getUser(Principal principal, Model model){
+    public String renderHomePage(Principal principal, Model model){
         User user = userService.findUserByEmail(principal.getName());
         logger.info("User {} is logged to home page", user.getFirstName()+" "+user.getLastName());
         model.addAttribute("user", user);
@@ -57,7 +57,7 @@ public class LoginController {
     }
 
     @GetMapping("/admin")
-    public String getAdmin(Principal principal, Model model){
+    public String renderAdminPage(Principal principal, Model model){
         User user = userService.findUserByEmail(principal.getName());
         logger.info("Admin user {} is logged to admin page", user.getFirstName()+" "+user.getLastName());
         model.addAttribute("user", user);

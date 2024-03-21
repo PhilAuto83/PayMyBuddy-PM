@@ -49,8 +49,9 @@ public class RegistrationController {
     @PostMapping("/register")
     public String createUser(@ModelAttribute User user, Model model){
         model.addAttribute("user", user);
+        User userSaved;
         try {
-            User userSaved = userService.save(user);
+            userSaved = userService.save(user);
         }catch(ConstraintViolationException ex){
             Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
             List<String> errors = violations.stream()

@@ -11,8 +11,11 @@
     <div class="row mt-3">
         <img th:src="@{/images/banner.png}" class="img-fluid  rounded col-sm-8 col-md-6 col-xl-4 mx-auto" alt="Pay My Buddy banner"/>
     </div>
-    <div class="row mt-3 col-sm-10 col-md-6 mx-auto">
+    <div th:if="${user != null}" class="row mt-3 col-sm-10 col-md-6 mx-auto">
         <h2 class="text-primary text-center mx-auto" th:text="'Welcome '+${user.getFirstName()+','}"></h2>
+    </div>
+    <div th:if="${oidcUser != null}" class="row mt-3 col-sm-10 col-md-6 mx-auto">
+        <h2 class="text-primary text-center mx-auto" th:text="'Welcome '+${oidcUser+','}"></h2>
     </div>
     <div class="row mt-3 col-sm-10 col-md-6 mx-auto">
         <p class="text-secondary text-center mx-auto">You can now start moving money around with your friends. Enjoy your stay in Pay My Buddy and share it around you.<p>

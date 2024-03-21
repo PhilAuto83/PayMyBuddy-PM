@@ -2,14 +2,17 @@ package com.phildev.pmb.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "account")
 public class Account {
 
     @Id
+    @NotNull
     private int id;
 
+    @NotNull
     private double balance;
 
     public Account(){
