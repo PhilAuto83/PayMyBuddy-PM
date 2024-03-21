@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,6 +24,11 @@ public class LoginControllerTest {
         mockMvc.perform(formLogin("/login").user("phil.pmb@test.fr").password("Test2024@")).andExpect(authenticated());
     }
 
+    @Test
+    @WithMockUser(roles ={"ADMIN"}, username = "admin@test.fr", password = "admin")
+    public void adminUserShouldReturn200() throws Exception {
+        mockMvc.perform(formLogin("/login").user("admin@test.fr").password("admin")).andExpect(authenticated());
+    }
 
 
     @Test

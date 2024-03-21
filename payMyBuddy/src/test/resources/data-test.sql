@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS pmbtest;
-CREATE DATABASE  pmbtest;
+CREATE DATABASE pmbtest;
 USE pmbtest;
 
 CREATE TABLE user(
@@ -54,6 +54,6 @@ CREATE TABLE transaction(
 );
 INSERT INTO transaction (creation_date, connection_id, description, amount)
 VALUES
-    (CURRENT_DATE ,1, 'Movie tickets', 20.0);
+    (CURRENT_DATE ,1, 'Movie tickets', 15.0);
 
 

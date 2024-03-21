@@ -35,7 +35,7 @@ public class LoginController {
         String email = (String) claims.get("email");
         if(email != null){
             if(userService.findUserByEmail(email)!= null){
-                model.addAttribute("user", claims.get("name"));
+                model.addAttribute("user", oidcUser);
                 return "home";
             }
 
@@ -43,8 +43,8 @@ public class LoginController {
             model.addAttribute("email", email);
             return "403";
         }
-        logger.error("User with email {} does not exist in Pay My Buddy app.", email);
-        model.addAttribute("email", email);
+        logger.error("User with does not exist in Pay My Buddy app");
+
        return "403";
     }
 

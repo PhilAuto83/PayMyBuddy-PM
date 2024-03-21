@@ -27,7 +27,7 @@ public class PayMyBuddySecurityConfig {
 
         return http.authorizeHttpRequests(auth ->{
             auth.requestMatchers( "/login", "/register","/index", "/registration-success","/login-check", "403").permitAll();
-            auth.requestMatchers("/admin").hasRole("ADMIN");
+            auth.requestMatchers("/admin", "/transfer-management", "/user-management").hasRole("ADMIN");
             auth.requestMatchers("/home").hasRole("USER");
             auth.anyRequest().authenticated();
         }).formLogin(form -> form
