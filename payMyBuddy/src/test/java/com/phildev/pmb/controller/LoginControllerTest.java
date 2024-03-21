@@ -21,7 +21,7 @@ public class LoginControllerTest {
 
     @Test
     public void userLoginTestShouldReturn200() throws Exception {
-        mockMvc.perform(formLogin("/login").user("phil.pmb@test.fr").password("Test2024@")).andExpect(authenticated());
+        mockMvc.perform(formLogin("/login").user("test.pmb@test.fr").password("Test2024@")).andExpect(authenticated());
     }
 
     @Test
@@ -30,10 +30,15 @@ public class LoginControllerTest {
         mockMvc.perform(formLogin("/login").user("admin@test.fr").password("admin")).andExpect(authenticated());
     }
 
+    @Test
+    public void realAdminUserShouldReturn200() throws Exception {
+        mockMvc.perform(formLogin("/login").user("joe.admin@pmb.fr").password("Admin2024@")).andExpect(authenticated());
+    }
+
 
     @Test
     public void userLoginFailed() throws Exception {
-        mockMvc.perform(formLogin("/login").user("phil.p@test.fr").password("Test20211@")).andExpect(unauthenticated());
+        mockMvc.perform(formLogin("/login").user("test.p@test.fr").password("Test20211@")).andExpect(unauthenticated());
     }
 
 
