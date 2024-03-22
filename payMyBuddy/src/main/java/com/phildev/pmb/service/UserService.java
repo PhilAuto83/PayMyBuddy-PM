@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public User save(User user){
-        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,}$");
+        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*#?&])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,}$");
         Matcher matcher = pattern.matcher(user.getPassword());
         Iterable<User> usersFoundInDb =userRepository.findAll();
         for (User userInDb : usersFoundInDb){
