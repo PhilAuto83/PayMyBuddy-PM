@@ -8,7 +8,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.util.Assert;
+
+import java.security.Principal;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -96,4 +99,6 @@ public class UserServiceTest {
         user.setPassword("Test/6666");
         Assertions.assertThrows(RuntimeException.class, () -> userService.save(user) );
     }
+
+
 }

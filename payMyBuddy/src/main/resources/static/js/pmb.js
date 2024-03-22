@@ -5,4 +5,3 @@ function redirectToLoginPage(){
 function redirectToRegisterPage(){
     window.location="http://localhost:8080/register";
 }
-

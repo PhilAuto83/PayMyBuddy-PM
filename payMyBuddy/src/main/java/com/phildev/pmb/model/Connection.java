@@ -27,6 +27,14 @@ public class Connection {
     @JoinColumn(name = "connection_id")
     private List<Transaction> transactions;
 
+    public Connection() {
+    }
+
+    public Connection(String senderEmail, String recipientEmail) {
+        this.senderEmail = senderEmail;
+        this.recipientEmail = recipientEmail;
+    }
+
     public int getId() {
         return id;
     }
