@@ -8,7 +8,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -79,4 +78,5 @@ public class ConnectionIT {
                 .andExpect(content().string(containsString("Do you want to add a connection with Tester Cousy?")))
                 .andExpect(content().string(containsString(" <button type=\"submit\" class=\"btn btn-primary col-4 mx-auto shadow font-weight-bold\">Yes</button>")));
     }
+
 }

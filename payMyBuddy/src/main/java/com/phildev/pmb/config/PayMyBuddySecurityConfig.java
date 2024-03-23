@@ -26,9 +26,9 @@ public class PayMyBuddySecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests(auth ->{
-            auth.requestMatchers( "/login", "/register","/index", "/registration-success","/login-check", "403").permitAll();
+            auth.requestMatchers( "/login", "/register","/index", "/registration-success","/login-check", "forbidden-access").permitAll();
             auth.requestMatchers("/admin", "/transfer-management", "/user-management").hasRole("ADMIN");
-            auth.requestMatchers("/home").hasRole("USER");
+            auth.requestMatchers("/home", "/transfer", "contact", "/connection").hasRole("USER");
             auth.anyRequest().authenticated();
         }).formLogin(form -> form
                         .loginPage("/login")
@@ -38,6 +38,8 @@ public class PayMyBuddySecurityConfig {
                     .loginPage("/login")
                     .defaultSuccessUrl("/login-check")
                     .failureUrl("/login?error=true"))
+                .oidcLogout(logout -> logout
+                    .backChannel(Customizer.withDefaults()))
         .build();
     }
 

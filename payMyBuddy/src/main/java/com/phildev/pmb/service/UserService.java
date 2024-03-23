@@ -52,4 +52,8 @@ public class UserService {
         }
 
     }
+
+    public User updateUserEmail(String newEmail, String currentEmail){
+       return userRepository.update(newEmail, currentEmail);
+    }
 }

@@ -4,10 +4,13 @@ import com.phildev.pmb.model.Connection;
 import com.phildev.pmb.model.User;
 import com.phildev.pmb.service.ConnectionService;
 import com.phildev.pmb.service.UserService;
+import com.phildev.pmb.utils.UserInfoUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +23,7 @@ import java.util.Map;
 @Controller
 public class ConnectionController {
 
-    private static Logger logger = LoggerFactory.getLogger(ConnectionController.class);
+    private static final  Logger logger = LoggerFactory.getLogger(ConnectionController.class);
 
     @Autowired
     UserService userService;
@@ -28,8 +31,8 @@ public class ConnectionController {
     @Autowired
     ConnectionService connectionService;
 
-    public Map<String, String> getConnectionsInfo(Principal principal){
-        List<Connection> connections = connectionService.findAllConnectionsFromCurrentUser(principal.getName());
+    public Map<String, String> getConnectionsInfo(@AuthenticationPrincipal OidcUser oidcUser,  Principal principal){
+        List<Connection> connections = connectionService.findAllConnectionsFromCurrentUser(UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal));
         Map<String, String> connectionNames = new HashMap<>();
         connections.forEach(connection -> {
             User user = userService.findUserByEmail(connection.getRecipientEmail());
@@ -38,17 +41,16 @@ public class ConnectionController {
         return connectionNames;
     }
 
-
-
     @GetMapping("/connection")
-    public String renderConnectionPage(Model model, Principal principal){
-        model.addAttribute("connectionNames", getConnectionsInfo(principal));
+    public String renderConnectionPage(Model model, @AuthenticationPrincipal OidcUser oidcUser,  Principal principal){
+        model.addAttribute("connectionNames", getConnectionsInfo(oidcUser, principal));
         return "connection";
     }
 
     @GetMapping("/connection/search")
-    public String getBuddyByEmail(Model model, Principal principal, @RequestParam String email){
-        model.addAttribute("connectionNames", getConnectionsInfo(principal));
+    public String getBuddyByEmail(Model model, @AuthenticationPrincipal OidcUser oidcUser, Principal principal, @RequestParam String email){
+        model.addAttribute("connectionNames", getConnectionsInfo(oidcUser, principal));
+        String userConnectedEmail =  UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal);
         User user = userService.findUserByEmail(email);
         User userToDisplay;
         model.addAttribute("principal", principal);
@@ -56,11 +58,11 @@ public class ConnectionController {
         if(user == null){
             logger.debug("Unknown or empty email address : {}", email);
             model.addAttribute("unknown", "Unknown or empty email address");
-        }else if(user.getEmail().equals(principal.getName())){
+        }else if(user.getEmail().equals(userConnectedEmail)){
             logger.debug("You cannot add a connection with your own address");
             model.addAttribute("error", "You cannot add a connection with your own address");
-        }else if(connectionService.findByRecipientEmail(principal.getName(), email) != null
-                && connectionService.findByRecipientEmail(principal.getName(), email).getSenderEmail().equals(principal.getName())){
+        }else if(connectionService.findByRecipientEmail(userConnectedEmail, email) != null
+                && connectionService.findByRecipientEmail(userConnectedEmail, email).getSenderEmail().equals(userConnectedEmail)){
             logger.debug("You cannot add an existing connection with {}", email);
             model.addAttribute("error", "You cannot add an existing connection with "+email);
         }else{
@@ -75,10 +77,11 @@ public class ConnectionController {
     }
 
     @PostMapping(value="/connection", consumes={MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String saveConnection(Model model, Principal principal, @RequestParam String email){
-        model.addAttribute("connectionNames", getConnectionsInfo(principal));
-        model.addAttribute("connections", connectionService.findAllConnectionsFromCurrentUser(principal.getName()));
-        connectionService.save(new Connection(principal.getName(), email));
+    public String saveConnection(Model model, @AuthenticationPrincipal OidcUser oidcUser, Principal principal, @RequestParam String email){
+        String userConnectedEmail =  UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal);
+        model.addAttribute("connectionNames", getConnectionsInfo(oidcUser, principal));
+        model.addAttribute("connections", connectionService.findAllConnectionsFromCurrentUser(userConnectedEmail));
+        connectionService.save(new Connection(userConnectedEmail, email));
         return "redirect:/connection";
     }
 
