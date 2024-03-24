@@ -41,7 +41,7 @@ public class LoginController {
         if(email != null){
             if(userService.findUserByEmail(email)!= null){
                 model.addAttribute("oidcUser", user.getFirstName());
-                return "home";
+                return "redirect:/home";
             }
 
             logger.error("User with email {} does not exist in Pay My Buddy app.", email);
