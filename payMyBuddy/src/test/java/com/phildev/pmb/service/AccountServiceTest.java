@@ -22,4 +22,9 @@ public class AccountServiceTest {
     public void testAccountCreationFailsWithInvalidId() throws Exception {
         Assertions.assertThrows(Exception.class, ()->accountService.save(new Account(10)));
     }
+
+    @Test
+    public void testAccountBalanceRetrieved() throws Exception {
+        Assertions.assertEquals(70.0, accountService.getCurrentBalanceByUserEmail("testee.money@test.fr"));
+    }
 }

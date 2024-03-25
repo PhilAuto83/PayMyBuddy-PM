@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 @Controller
-public class Profile {
+public class ProfileController {
 
     @Autowired
     UserService userService;

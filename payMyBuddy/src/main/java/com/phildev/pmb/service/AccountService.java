@@ -28,4 +28,8 @@ public class AccountService {
         }
         return accountSavedInDB;
     }
+
+    public double getCurrentBalanceByUserEmail(String email){
+        return accountRepository.getBalanceByUserEmail(email);
+    }
 }

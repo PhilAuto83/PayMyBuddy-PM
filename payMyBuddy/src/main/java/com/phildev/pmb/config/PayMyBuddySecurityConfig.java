@@ -72,10 +72,6 @@ public class PayMyBuddySecurityConfig {
         };
     }
 
-
-
-
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -92,6 +88,4 @@ public class PayMyBuddySecurityConfig {
     WebSecurityCustomizer enableStaticResources(){
         return (web -> web.ignoring().requestMatchers("/css/**", "js/**","/images/**"));
     }
-
-
 }

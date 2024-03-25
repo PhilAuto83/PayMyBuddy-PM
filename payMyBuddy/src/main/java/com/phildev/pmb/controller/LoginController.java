@@ -2,6 +2,7 @@ package com.phildev.pmb.controller;
 
 
 import com.phildev.pmb.model.User;
+import com.phildev.pmb.service.AccountService;
 import com.phildev.pmb.service.UserService;
 import com.phildev.pmb.utils.UserInfoUtility;
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AccountService accountService;
+
     @GetMapping("/login")
     public String renderLoginPage(){
         return "login";
@@ -41,7 +45,7 @@ public class LoginController {
         if(email != null){
             if(userService.findUserByEmail(email)!= null){
                 model.addAttribute("oidcUser", user.getFirstName());
-                return "redirect:/home";
+                return "home";
             }
 
             logger.error("User with email {} does not exist in Pay My Buddy app.", email);
@@ -55,7 +59,9 @@ public class LoginController {
 
     @GetMapping("/home")
     public String renderHomePage(@AuthenticationPrincipal OidcUser oidcUser, Principal principal, Model model){
-        User user = userService.findUserByEmail(UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal));
+        String email = UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal);
+        User user = userService.findUserByEmail(email);
+        model.addAttribute("balance", accountService.getCurrentBalanceByUserEmail(email));
         logger.info("User {} is logged to home page", user.getFirstName()+" "+user.getLastName());
         model.addAttribute("user", user);
         return "home";
