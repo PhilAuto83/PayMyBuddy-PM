@@ -68,4 +68,13 @@ public class Connection {
         this.transactions = transactions;
     }
 
+    @Override
+    public String toString() {
+        return "Connection{" +
+                "id=" + id +
+                ", senderEmail='" + senderEmail + '\'' +
+                ", recipientEmail='" + recipientEmail + '\'' +
+                ", transactions=" + transactions +
+                '}';
+    }
 }

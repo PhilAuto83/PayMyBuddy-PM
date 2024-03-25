@@ -112,5 +112,16 @@ public class User {
         this.connections = connections;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role='" + role + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", connections=" + connections +
+                '}';
+    }
 }

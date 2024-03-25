@@ -2,6 +2,7 @@ package com.phildev.pmb.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -20,9 +21,15 @@ public class Transaction {
     @Column(name = "connection_id")
     private int connectionId;
 
+    @NotNull
     private String description;
 
+    @NotNull
     private double amount;
+
+    public Transaction(){
+        this.creationDate = LocalDate.now();
+    }
 
     public int getId() {
         return id;
@@ -62,5 +69,16 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", connectionId=" + connectionId +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 }
