@@ -23,7 +23,7 @@
                         <option th:each="connection : ${connections}" th:value="${connection.key}" th:text="${connection.value}"></option>
                     </select>
                     <input type="text" minlength="5" maxlength="30" class="form-control col-4 d-inline mx-auto" th:field="*{description}" placeholder="Description">
-                    <input type="number" min="1.0" step="0.1" class="form-control col-2 d-inline mx-auto" th:field="*{amount}" placeholder="1€">
+                    <input type="number" min="1.0" step="0.05" class="form-control col-2 d-inline mx-auto" th:field="*{amount}" placeholder="1€">
                     <button type="submit" class="btn font-weight-bold text-white col-2 d-inline mx-auto py-0" style="font-size: 1.2rem; background-color: limegreen;">Pay</button>
                 </div>
               </form>

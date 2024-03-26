@@ -1,19 +1,17 @@
 package com.phildev.pmb.service;
 
-import com.phildev.pmb.dto.TransactionDTO;
 import com.phildev.pmb.model.Connection;
 import com.phildev.pmb.model.Transaction;
-import com.phildev.pmb.model.User;
 import com.phildev.pmb.repository.AccountRepository;
 import com.phildev.pmb.repository.ConnectionRepository;
 import com.phildev.pmb.repository.TransactionRepository;
-import com.phildev.pmb.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,16 +34,20 @@ public class TransactionService {
     };
 
     public double removeMoneyFromAccountWithFee(String email, Transaction transaction){
-        return  accountRepository.getBalanceByUserEmail(email) - transaction.getAmount()*1.005;
+        BigDecimal preciseAmount = BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
+        BigDecimal newAmount = preciseAmount.subtract(BigDecimal.valueOf(transaction.getAmount()).multiply(BigDecimal.valueOf(1.005)));
+        return (double) Math.round(newAmount.doubleValue() * 100) /100;
     }
 
-
     public double addMoneyToAccount(String email, Transaction transaction){
-        return  accountRepository.getBalanceByUserEmail(email) + transaction.getAmount();
+        BigDecimal preciseAmount = BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email)).add(BigDecimal.valueOf(transaction.getAmount()));
+        return  preciseAmount.doubleValue();
     }
 
     public boolean checkUserBalance(String email, Transaction transaction){
-        return  accountRepository.getBalanceByUserEmail(email)>=transaction.getAmount()*1.005;
+        BigDecimal accountAmount = BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
+        BigDecimal transactionAmount = BigDecimal.valueOf(transaction.getAmount()).multiply(BigDecimal.valueOf(1.005));
+        return  accountAmount.doubleValue()>=transactionAmount.doubleValue();
     }
 
     @Transactional
@@ -64,12 +66,12 @@ public class TransactionService {
             if(checkUserBalance(senderEmail, transaction)){
                 double newSenderBalance = removeMoneyFromAccountWithFee(senderEmail, transaction);
                 double newRecipientBalance = addMoneyToAccount(recipientEmail, transaction);
-                accountRepository.updateAccountBalance(newRecipientBalance,senderEmail);
+                accountRepository.updateAccountBalance(newSenderBalance, senderEmail);
                 logger.debug("Balance for {} has been updated and is now {}", senderEmail, newSenderBalance);
                 accountRepository.updateAccountBalance(newRecipientBalance, recipientEmail);
                 logger.debug("Balance for {} has been updated and is now {}", recipientEmail, newRecipientBalance);
             }else{
-                throw new RuntimeException("Insufficient ammount in current user balance");
+                throw new RuntimeException("Insufficient amount in current user balance");
             }
         }else {
            logger.error("User and Recipient were not found so payment is aborted");
