@@ -109,7 +109,7 @@
 						<configuration>
 							<argLine>@{failsafeArgLine}</argLine>
 							<includes>
-								<include>**/*IntegrationTest.java</include>
+								<include>**/*IT.java</include>
 							</includes>
 						</configuration>
 					</execution>

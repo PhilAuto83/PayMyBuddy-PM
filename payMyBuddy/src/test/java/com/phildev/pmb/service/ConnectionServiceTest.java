@@ -39,15 +39,15 @@ public class ConnectionServiceTest {
 
     @Test
     public void testNullObjectForSenderEmail(){
-        List<Connection> connections = connectionService.findAllConnectionsFromCurrentUser("testee.money@test.fr");
+        List<Connection> connections = connectionService.findAllConnectionsFromCurrentUser("testee.monkey@test.fr");
         Assertions.assertEquals(Collections.EMPTY_LIST, connections);
     }
 
     @Test
     public void testSavingConnection(){
-        Connection connection = new Connection("tester.cousy@test.fr","testee.money@test.fr");
+        Connection connection = new Connection("tester.cousy@test.fr","testo.monkey@test.fr");
         Connection savedConnection = connectionService.save(connection);
         Assertions.assertEquals("tester.cousy@test.fr",savedConnection.getSenderEmail());
-        Assertions.assertEquals("testee.money@test.fr",savedConnection.getRecipientEmail());
+        Assertions.assertEquals("testo.monkey@test.fr",savedConnection.getRecipientEmail());
     }
 }

@@ -53,10 +53,10 @@ public class UserServiceTest {
         User user = new User();
         user.setFirstName("Test");
         user.setLastName("Testy");
-        user.setEmail("testy@test.fr");
+        user.setEmail("testy2@test.fr");
         user.setPassword("Test@6666");
         userService.save(user);
-        User userInDb = userRepository.findByEmail("testy@test.fr");
+        User userInDb = userRepository.findByEmail("testy2@test.fr");
         Assertions.assertEquals(user.getEmail(), userInDb.getEmail());
     }
 

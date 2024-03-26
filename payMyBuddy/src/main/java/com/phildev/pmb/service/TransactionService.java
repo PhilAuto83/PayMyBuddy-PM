@@ -66,11 +66,17 @@ public class TransactionService {
             if(checkUserBalance(senderEmail, transaction)){
                 double newSenderBalance = removeMoneyFromAccountWithFee(senderEmail, transaction);
                 double newRecipientBalance = addMoneyToAccount(recipientEmail, transaction);
-                accountRepository.updateAccountBalance(newSenderBalance, senderEmail);
-                logger.debug("Balance for {} has been updated and is now {}", senderEmail, newSenderBalance);
-                accountRepository.updateAccountBalance(newRecipientBalance, recipientEmail);
-                logger.debug("Balance for {} has been updated and is now {}", recipientEmail, newRecipientBalance);
+                try{
+                    accountRepository.updateAccountBalance(newSenderBalance, senderEmail);
+                    logger.debug("Balance for {} has been updated and is now {}", senderEmail, newSenderBalance);
+                    accountRepository.updateAccountBalance(newRecipientBalance, recipientEmail);
+                    logger.debug("Balance for {} has been updated and is now {}", recipientEmail, newRecipientBalance);
+                }catch(Exception ex){
+                    logger.error("Something went wrong when updating sender {} or recipient account {}", senderEmail, recipientEmail);
+                    throw new RuntimeException("Something went wrong when updating sender or recipient account");
+                }
             }else{
+                logger.error("Insufficient amount in current user balance");
                 throw new RuntimeException("Insufficient amount in current user balance");
             }
         }else {

@@ -16,7 +16,9 @@ VALUES
     ('Joe', 'Admin','ADMIN','joe.admin@pmb.fr','$2a$10$zFvC9UAxeYJp3dnyv8cHHO0JupOZ6GtlGtAuWbCFzXn4znAShiGym'),
     ('Test', 'Pmb','USER','test.pmb@test.fr','$2a$10$XeE2pyiMLbkJbXz46tzRf.SFSqlyBQAKis0dzL1jRlHMYHvhxME32'),
     ('Tester', 'Cousy','USER','tester.cousy@test.fr','$2a$10$RdwowuvQO2Y25yyfS/KPxevbKbXNGaLROOk7NMrx7GEkOZRqfRufq'),
-    ('Testee', 'Money','USER','testee.money@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O');
+    ('Testee', 'Money','USER','testee.money@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O'),
+    ('Testo', 'Monkey','USER','testo.monkey@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O'),
+    ('Testy', 'Testy','USER','testy@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O');
 
 
 CREATE TABLE account(
@@ -30,7 +32,9 @@ VALUES
     (1, 30.0),
     (2, 800.0),
     (3, 200.0),
-    (4, 70.0);
+    (4, 70.0),
+    (5, 450.0),
+    (6, 300.0);
 
 CREATE TABLE connection(
                            id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -42,7 +46,9 @@ CREATE TABLE connection(
 
 INSERT INTO connection (sender_email, recipient_email)
 VALUES
-    ('test.pmb@test.fr', 'testee.money@test.fr');
+    ('test.pmb@test.fr', 'testee.money@test.fr'),
+    ('tester.cousy@test.fr', 'testee.money@test.fr');
+
 
 CREATE TABLE transaction(
                             id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
