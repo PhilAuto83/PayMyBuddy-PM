@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -80,13 +82,13 @@ public class TransactionController {
     }
 
     @PostMapping(value = "/transfer", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String saveTransaction(@ModelAttribute Transaction transaction, Model model){
+    public String saveTransaction(@ModelAttribute Transaction transaction, Model model, RedirectAttributes redirectAttributes){
         Transaction transactionSaved;
             try{
                 transactionSaved = transactionService.save(transaction);
             }catch (Exception ex){
-                model.addAttribute("errors", ex.getMessage());
-                return "redirect:/transfer";
+                redirectAttributes.addAttribute("true", true).addFlashAttribute("error", ex.getMessage());
+                return "redirect:/transfer?error={true}";
             }
         return "redirect:/transfer";
     }

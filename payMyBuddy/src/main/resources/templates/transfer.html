@@ -27,7 +27,7 @@
                     <button type="submit" class="btn font-weight-bold text-white col-2 d-inline mx-auto py-0" style="font-size: 1.2rem; background-color: limegreen;">Pay</button>
                 </div>
               </form>
-              <div th:if="${errors}" th:text="${errors}" class="text-danger text-center font-weight-bold"></div>
+              <div th:if="${param.error}" th:text="${error}" class="text-danger text-center font-weight-bold"></div>
         </div>
         <div class="col-12 p-2" style="font-size: 1.2rem;">
             My Transactions
