@@ -1,6 +1,7 @@
 package com.phildev.pmb.repository;
 
 import com.phildev.pmb.model.Account;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,12 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
             nativeQuery = true
     )
     double getBalanceByUserEmail(String email);
+
+
+    @Modifying
+    @Query(
+            value = "UPDATE account ac JOIN user u ON ac.id=u.id SET ac.balance=?1  where u.email=?2",
+            nativeQuery = true
+    )
+    public void updateAccountBalance(double amount, String email);
 }

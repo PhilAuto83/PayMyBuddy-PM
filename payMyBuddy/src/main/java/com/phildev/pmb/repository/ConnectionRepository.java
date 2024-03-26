@@ -23,6 +23,8 @@ public interface ConnectionRepository extends JpaRepository<Connection, Integer>
     )
     public List<Connection> getAllConnectionsFromUserEmail(String email);
 
+
+
     
 
 

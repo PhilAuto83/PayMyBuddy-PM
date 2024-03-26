@@ -32,4 +32,8 @@ public class AccountService {
     public double getCurrentBalanceByUserEmail(String email){
         return accountRepository.getBalanceByUserEmail(email);
     }
+
+    public void updateAccountBalance(double amount, String email){
+        accountRepository.updateAccountBalance(amount, email);
+    }
 }
