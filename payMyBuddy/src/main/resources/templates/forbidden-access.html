@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forbidden Access</title>
+    <link th:href="@{/images/banner.ico}" rel="icon"/>
+    <link th:href="@{/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container-fluid">
+
+            <div class="btn-lg col-sm-8 col-md-6 mx-auto my-4 p-2 text-white text-center rounded shadow mb-2" style="background-color: limegreen;">
+                Pay My Buddy
+            </div>
+            <div th:if="${email != null}" class="col-6 mx-auto text-center">
+                <div th:text="'The email '+${email}+' is not known from Pay My Buddy'" class="alert alert-danger"></div>
+                <button type="button" class="btn btn-primary" onclick="redirectToLoginPage()">
+                    Go back to login page
+                </button>
+            </div>
+            <div th:if="${email == null}" class="col-6 mx-auto text-center">
+                <div th:text="'User is not known from Pay My Buddy'" class="alert alert-danger"></div>
+                <button type="button" class="btn btn-primary" onclick="redirectToLoginPage()">
+                    Go back to login page
+                </button>
+            </div>
+
+
+    </div>
+    <script th:src="@{/js/pmb.js}"></script>
+  
+</body>
+</html>

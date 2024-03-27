@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Success</title>
+    <link th:href="@{/images/banner.ico}" rel="icon"/>
+    <link th:href="@{/css/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="btn-lg col-sm-8 col-md-6 mx-auto my-4 p-2 text-white text-center rounded shadow" style="background-color: limegreen;">
+        Pay My Buddy
+    </div>
+    <div class="alert alert-success col-6 mx-auto text-center">
+        Your account has been created successfully.
+        <button type="button" class="close" onclick="redirectToLoginPage()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-6 mx-auto text-center">
+            <button type="button" class="btn btn-primary " onclick="redirectToLoginPage()">Go to Login page to start using Pay My Buddy</button>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/pmb.js}"></script>
+
+</body>
+</html>
