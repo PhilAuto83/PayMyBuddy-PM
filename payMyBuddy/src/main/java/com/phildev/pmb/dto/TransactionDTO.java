@@ -1,17 +1,17 @@
 package com.phildev.pmb.dto;
 
-
 public class TransactionDTO {
 
     private String connectionName;
-    private String Description;
+    private String description;
     private double amount;
 
     public TransactionDTO(String connectionName, String description, double amount) {
         this.connectionName = connectionName;
-        Description = description;
-        this.amount = amount;
-    }
+        this.description = description;
+        this.amount = amount;   }
+
+
 
     public String getConnectionName() {
         return connectionName;
@@ -22,11 +22,11 @@ public class TransactionDTO {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public double getAmount() {
@@ -41,7 +41,7 @@ public class TransactionDTO {
     public String toString() {
         return "TransactionDTO{" +
                 "connectionName='" + connectionName + '\'' +
-                ", Description='" + Description + '\'' +
+                ", description='" + description + '\'' +
                 ", amount=" + amount +
                 '}';
     }

@@ -33,4 +33,25 @@ public class TransactionIT {
                 .andExpect(content().string(containsString("<td>15.0</td>")));
     }
 
+    @Test
+    @WithMockUser(username = "testy@test.fr")
+    public void testRenderingTransactionPage() throws Exception {
+        mockMvc.perform(get("/transfer"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("You have currently no transaction<")));
+
+    }
+
+    @Test
+    @WithMockUser(username = "test.pmb@test.fr")
+    public void testRenderingTransactionPageWhenCallingPageInfo() throws Exception {
+        mockMvc.perform(get("/transfer/info?pageNo=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("<option value=\"1\">Testee Money</option>")))
+                .andExpect(content().string(containsString("<td>Movie tickets</td>")))
+                .andExpect(content().string(containsString("<td>15.0</td>")));
+    }
+
 }

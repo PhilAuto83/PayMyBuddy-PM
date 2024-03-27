@@ -58,7 +58,7 @@ public class LoginIT {
                 .andExpect(content().string(containsString("<title>Home</title>")))
                  .andDo(print())
                         .andExpect(status().isOk())
-                        .andExpect(content().string(containsString("Welcome Test,</h2>")));
+                        .andExpect(content().string(containsString("Welcome Test,</h4>")));
             }
 
     @Test
@@ -74,7 +74,7 @@ public class LoginIT {
         mockMvc.perform(get("/admin"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("<title>Admin Home</title>")))
-                .andExpect(content().string(containsString("Welcome Joe,</h2>")));
+                .andExpect(content().string(containsString("Welcome Joe,</h4>")));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class LoginIT {
                         .with(oidcLogin().oidcUser(oidcUser)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Welcome Test,</h2>")))
+                .andExpect(content().string(containsString("Welcome Test,</h4>")))
         .andExpect(content().string(containsString("You can now start moving money around with your friends. Enjoy your stay in Pay My Buddy and share it around you.<p>")));
     }
 
