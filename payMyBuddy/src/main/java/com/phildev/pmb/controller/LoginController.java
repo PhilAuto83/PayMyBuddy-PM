@@ -1,6 +1,7 @@
 package com.phildev.pmb.controller;
 
 
+import com.phildev.pmb.model.BankInfo;
 import com.phildev.pmb.model.User;
 import com.phildev.pmb.service.AccountService;
 import com.phildev.pmb.service.UserService;
@@ -45,7 +46,7 @@ public class LoginController {
         if(email != null){
             if(userService.findUserByEmail(email)!= null){
                 model.addAttribute("oidcUser", user.getFirstName());
-                return "home";
+                return "redirect:/home";
             }
 
             logger.error("User with email {} does not exist in Pay My Buddy app.", email);
@@ -62,6 +63,7 @@ public class LoginController {
         String email = UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal);
         User user = userService.findUserByEmail(email);
         model.addAttribute("balance", accountService.getCurrentBalanceByUserEmail(email));
+        model.addAttribute("bankInfo", new BankInfo());
         logger.info("User {} is logged to home page", user.getFirstName()+" "+user.getLastName());
         model.addAttribute("user", user);
         return "home";

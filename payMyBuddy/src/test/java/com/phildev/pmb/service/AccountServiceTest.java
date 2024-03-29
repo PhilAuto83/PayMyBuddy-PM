@@ -27,4 +27,15 @@ public class AccountServiceTest {
     public void testAccountBalanceRetrieved() throws Exception {
         Assertions.assertEquals(70.0, accountService.getCurrentBalanceByUserEmail("testee.money@test.fr"));
     }
+
+    @Test
+    public void testSufficientMoneyInAccountReturnsFalse() throws Exception {
+        Assertions.assertFalse( accountService.hasSufficientMoney("testee.money@test.fr",5000));
+    }
+
+    @Test
+    public void testSufficientMoneyInAccountReturnsTrue() throws Exception {
+        Assertions.assertTrue(accountService.hasSufficientMoney("testee.money@test.fr",20));
+    }
+
 }

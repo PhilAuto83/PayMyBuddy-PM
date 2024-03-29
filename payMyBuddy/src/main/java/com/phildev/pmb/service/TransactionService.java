@@ -36,23 +36,27 @@ public class TransactionService {
     private ConnectionRepository connectionRepository;
 
     public List<Transaction> getTransactionsByUserEmail(String email){
+        logger.info("Search a list of transactions for user {}", email);
         return transactionRepository.getTransactionsByEmail(email);
     };
 
     public double removeMoneyFromAccountWithFee(String email, Transaction transaction){
         BigDecimal preciseAmount = BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
         BigDecimal newAmount = preciseAmount.subtract(BigDecimal.valueOf(transaction.getAmount()).multiply(BigDecimal.valueOf(1.005)));
+        logger.debug("Try to remove money {} from user account {} with 0.5% fee", transaction.getAmount(), email);
         return (double) Math.round(newAmount.doubleValue() * 100) /100;
     }
 
     public double addMoneyToAccount(String email, Transaction transaction){
         BigDecimal preciseAmount = BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email)).add(BigDecimal.valueOf(transaction.getAmount()));
+        logger.debug("Try to add money {} from user account {}", transaction.getAmount(), email);
         return  preciseAmount.doubleValue();
     }
 
     public boolean checkUserBalance(String email, Transaction transaction){
         BigDecimal accountAmount = BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
         BigDecimal transactionAmount = BigDecimal.valueOf(transaction.getAmount()).multiply(BigDecimal.valueOf(1.005));
+        logger.info("Checking user {} has sufficient amount on his account", email);
         return  accountAmount.doubleValue()>=transactionAmount.doubleValue();
     }
 
