@@ -21,11 +21,109 @@
         <p class="text-secondary text-center mx-auto" style="font-size: 1rem;">You can now start moving money around with your friends. Enjoy your stay in Pay My Buddy and share it around you.<p>
     </div>
     <div class="row mt-3 col-sm-10 col-md-6 mx-auto">
-        <span class="col-12 max auto text-primary text-center font-weight-bold" style="font-size: 1rem;">Your current balance</span>
-        <p th:text="${balance}+' €'" class="bg-light text-center text-secondary font-weight-bold mx-auto rounded p-2" style="font-size: 1rem;"><p>
+        <span class="col-12 max auto text-primary text-center font-weight-bold" style="font-size: 1.2rem;">Your current balance</span>
+        <p th:text="${balance}+' €'" class="bg-light text-center text-secondary font-weight-bold mx-auto rounded p-2" style="font-size: 1.2rem;"><p>
+    </div>
+    <div class="text-center">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#depositModal">
+            Deposit Money
+        </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="depositModalLabel">Deposit Money</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--    DEPOSIT MONEY FORM-->
+                    <div class="p-2 shadow-lg">
+                        <form th:object="${bankInfo}" th:action="@{/deposit}" method="post">
+                            <div class="form-group">
+                                <label for="cardNumber" class="text-center text-muted font-weight-bold">Card Number</label>
+                                <input maxlength="16" type="text" class="form-control" id="cardNumber" th:field="*{cardNumber}" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="expDate" class="text-center text-muted font-weight-bold">Expiration Date</label>
+                                    <input maxlength="5" type="text" class="form-control" id="expDate"  th:field="*{expirationDate}" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="cvv" class="text-center text-muted font-weight-bold">CVV</label>
+                                    <input maxlength="3" type="text" class="form-control" id="cvv" th:field="*{cvv}" placeholder="123">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount" class="text-center text-muted font-weight-bold">Amount</label>
+                                <input type="text" class="form-control" id="amount" th:field="*{amount}" placeholder="100.00">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Deposit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <!-- Button trigger send money out modal -->
+        <button type="button" class="btn btn-primary align-content-center" data-bs-toggle="modal" data-bs-target="#sendModal">
+            Send Money Out
+        </button>
+    </div>
+    <!--  Send Money out Modal -->
+    <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendModalLabel">Send to external account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--   SEND MONEY FORM-->
+                    <div class="p-2 shadow-lg">
+                        <form th:object="${bankInfo}" th:action="@{/send-out}" method="post">
+                            <div class="form-group">
+                                <label for="cardNumber" class="text-center text-muted font-weight-bold">Card Number</label>
+                                <input maxlength="16" type="text" class="form-control" id="cardNumber" th:field="*{cardNumber}" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="expDate" class="text-center text-muted font-weight-bold">Expiration Date</label>
+                                    <input maxlength="5" type="text" class="form-control" id="expDate" th:field="*{expirationDate}" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="cvv" class="text-center text-muted font-weight-bold">CVV</label>
+                                    <input maxlength="3" type="text" class="form-control" id="cvv" th:field="*{cvv}" placeholder="123">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount" class="text-center text-muted font-weight-bold">Amount</label>
+                                <input type="text" class="form-control" id="amount" th:field="*{amount}" placeholder="100.00">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send it out</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 <script th:src="@{/js/pmb.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
 
 
 

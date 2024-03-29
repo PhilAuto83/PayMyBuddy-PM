@@ -21,7 +21,12 @@ public class ConnectionService {
 
     public Connection findByRecipientEmail(String senderEmail, String recipientEmail){
         Connection connectionFound = connectionRepository.getConnectionBySenderAndRecipientEmail(senderEmail, recipientEmail);
-        return connectionRepository.getConnectionBySenderAndRecipientEmail(senderEmail, recipientEmail);
+        if(connectionFound==null){
+            logger.debug("No connection found for user email {}", senderEmail);
+        }else{
+            logger.info("Connection found for user {} and recipient {} with id {}", senderEmail, recipientEmail, connectionFound.getId());
+        }
+       return connectionRepository.getConnectionBySenderAndRecipientEmail(senderEmail, recipientEmail);
     }
 
     public List<Connection> findAllConnectionsFromCurrentUser(String email){

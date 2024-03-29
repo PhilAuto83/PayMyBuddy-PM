@@ -8,13 +8,13 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary p-0">
     <div class="container-fluid p-0" th:fragment="nav-container">
         <a class="navbar-brand rounded p-2 text-white font-weight-bold btn-lg" href="#" style="background-color: limegreen;font-size:0.8rem;">Pay My Buddy</a>
-        <div class="navbar-nav  my-auto">
-            <a class="nav-link  font-weight-bold" th:href="@{/home}" style="font-size:0.8rem;">Home</a>
+        <div class="navbar-nav my-auto">
+            <a class="nav-link  font-weight-bold " th:href="@{/home}" style="font-size:0.8rem;">Home</a>
             <a class="nav-link  font-weight-bold " th:href="@{/transfer}" style="font-size:0.8rem;">Transfer</a>
             <a class="nav-link  font-weight-bold " th:href="@{/connection}" style="font-size:0.8rem;">Connection</a>
             <a class="nav-link  font-weight-bold " th:href="@{/profile}" style="font-size:0.8rem;">Profile</a>
             <a class="nav-link  font-weight-bold " th:href="@{/contact}" style="font-size:0.8rem;">Contact</a>
-            <form th:action="@{/logout}" method="post">
+            <form th:action="@{/logout}" method="post" class="col-sm-1">
                 <button type="submit" class="btn btn-lg font-weight-bold p-8" style="font-size:0.8rem;">Log off</button>
             </form>
         </div>

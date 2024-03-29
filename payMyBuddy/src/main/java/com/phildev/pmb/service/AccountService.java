@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 @Service
@@ -30,10 +31,34 @@ public class AccountService {
     }
 
     public double getCurrentBalanceByUserEmail(String email){
+        logger.info("Retrieve  balance for user {}", email);
         return accountRepository.getBalanceByUserEmail(email);
     }
 
     public void updateAccountBalance(double amount, String email){
+        logger.info("Launching update user balance to {} for email : {}",amount, email);
         accountRepository.updateAccountBalance(amount, email);
+    }
+
+    public boolean hasSufficientMoney(String email, double amount){
+        logger.info("Check if user has sufficient money to send it out to external account");
+        BigDecimal preciseAmount = BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
+        BigDecimal moneyOut = BigDecimal.valueOf(amount).multiply(BigDecimal.valueOf(1.005));
+        return !(moneyOut.doubleValue() > preciseAmount.doubleValue());
+    }
+    public void depositMoney(double amount, String email){
+        BigDecimal currentBalance =  BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
+        BigDecimal deposit = currentBalance.add(BigDecimal.valueOf(amount));
+        logger.info("Deposit {} € for user : {}",deposit.doubleValue(), email);
+        accountRepository.updateAccountBalance(deposit.doubleValue(), email);
+    }
+
+    public void sendMoneyOut(double amount, String email){
+        BigDecimal currentBalance =  BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
+        BigDecimal newAccountBalance = currentBalance.subtract(BigDecimal.valueOf(amount).multiply(BigDecimal.valueOf(1.005)));
+        double balanceUpdated = (double) Math.round(newAccountBalance.doubleValue() * 100) /100;
+        logger.info("Withdrawal {} € for user : {}",amount,  email);
+        accountRepository.updateAccountBalance(balanceUpdated, email);
+        logger.info("New balance {} € for user : {}",balanceUpdated,  email);
     }
 }

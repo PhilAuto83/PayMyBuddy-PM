@@ -109,16 +109,18 @@ public class TransactionController {
     @PostMapping(value = "/transfer", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public String saveTransaction(@AuthenticationPrincipal OidcUser oidcUser, Principal principal, @ModelAttribute Transaction transaction, Model model, RedirectAttributes redirectAttributes){
         String email = UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal);
-        Page <TransactionDTO> page = transactionService.findPaginated(email, 1, 3);
-        //retrieve last page when creating new transaction
-        int newPage = (int) (Math.round((double) page.getTotalElements() /3)+1);
         Transaction transactionSaved;
+        int pageNumber = 1;
             try{
                 transactionSaved = transactionService.save(transaction);
+                Page <TransactionDTO> page = transactionService.findPaginated(email, 1, 3);
+                pageNumber= page.getTotalPages();
+                logger.info("Current number of pages after transaction saved is : {}", pageNumber);
+                logger.debug("Transaction with connection id {} done with success for the amount {}", transactionSaved.getConnectionId(), transactionSaved.getAmount());
             }catch (Exception ex){
                 redirectAttributes.addAttribute("true", true).addFlashAttribute("error", ex.getMessage());
                 return "redirect:/transfer?error={true}";
             }
-        return "redirect:/transfer/"+newPage;
+        return "redirect:/transfer/"+pageNumber;
     }
 }

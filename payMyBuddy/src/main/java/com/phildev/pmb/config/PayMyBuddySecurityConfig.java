@@ -31,7 +31,7 @@ public class PayMyBuddySecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth ->{
-            auth.requestMatchers( "/login", "/register","/index", "/registration-success","/login-check", "forbidden-access").permitAll();
+            auth.requestMatchers( "http://localhost:8082/external-account","/login", "/register","/index", "/registration-success","/login-check", "forbidden-access").permitAll();
             auth.requestMatchers("/admin", "/transfer-management", "/user-management").hasRole("ADMIN");
             auth.requestMatchers("/home", "/transfer","/transfers", "contact", "/connection").hasRole("USER");
             auth.anyRequest().authenticated();

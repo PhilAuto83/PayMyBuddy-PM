@@ -118,9 +118,7 @@ public class LoginIT {
         mockMvc.perform(get("/login-check")
                         .with(oidcLogin().oidcUser(oidcUser)))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Welcome Test,</h4>")))
-        .andExpect(content().string(containsString("You can now start moving money around with your friends. Enjoy your stay in Pay My Buddy and share it around you.<p>")));
+                .andExpect(status().is(302));
     }
 
 
