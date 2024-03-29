@@ -30,7 +30,7 @@ public class AccountServiceTest {
 
     @Test
     public void testSufficientMoneyInAccountReturnsFalse() throws Exception {
-        Assertions.assertFalse( accountService.hasSufficientMoney("testee.money@test.fr",5000));
+        Assertions.assertFalse(accountService.hasSufficientMoney("testee.money@test.fr",5000));
     }
 
     @Test
