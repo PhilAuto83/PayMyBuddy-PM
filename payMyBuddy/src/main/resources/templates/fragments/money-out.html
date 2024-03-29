@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+      <html lang="en" xmlns:th="http://www.thymeleaf.org/">
+      <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+      <title>Payment Modal</title>
+</head>
+<body>
+<div th:fragment="money-out-form" class="shadow-lg p-2 rounded">
+
+  <h5 class="font-weight-bold text-center text-muted">Send to external account</h5>
+  <form class="bg-light">
+    <div class="form-group">
+      <label for="cardNumber" class="text-center text-muted font-weight-bold">Card Number</label>
+      <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="expDate" class="text-center text-muted font-weight-bold">Expiration Date</label>
+        <input type="text" class="form-control" id="expDate" placeholder="MM/YY">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="cvv" class="text-center text-muted font-weight-bold">CVV</label>
+        <input type="text" class="form-control" id="cvv" placeholder="123">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="amount" class="text-center text-muted font-weight-bold">Amount</label>
+      <input type="text" class="form-control" id="amount" placeholder="100.00">
+    </div>
+    <button type="submit" class="btn btn-primary">Send it out</button>
+  </form>
+
+
+
+</div>
+
+
+
+
+</body>
+</html>
