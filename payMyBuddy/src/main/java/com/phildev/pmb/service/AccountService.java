@@ -2,14 +2,14 @@ package com.phildev.pmb.service;
 
 import com.phildev.pmb.model.Account;
 import com.phildev.pmb.repository.AccountRepository;
-import jakarta.validation.ConstraintViolationException;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLException;
 
 @Service
 public class AccountService {
@@ -46,6 +46,8 @@ public class AccountService {
         BigDecimal moneyOut = BigDecimal.valueOf(amount).multiply(BigDecimal.valueOf(1.005));
         return !(moneyOut.doubleValue() > preciseAmount.doubleValue());
     }
+
+    @Transactional(rollbackOn = {Exception.class, SQLException.class, RuntimeException.class})
     public void depositMoney(double amount, String email){
         BigDecimal currentBalance =  BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
         BigDecimal deposit = currentBalance.add(BigDecimal.valueOf(amount));
@@ -53,6 +55,7 @@ public class AccountService {
         accountRepository.updateAccountBalance(deposit.doubleValue(), email);
     }
 
+    @Transactional(rollbackOn = {Exception.class, SQLException.class, RuntimeException.class})
     public void sendMoneyOut(double amount, String email){
         BigDecimal currentBalance =  BigDecimal.valueOf(accountRepository.getBalanceByUserEmail(email));
         BigDecimal newAccountBalance = currentBalance.subtract(BigDecimal.valueOf(amount).multiply(BigDecimal.valueOf(1.005)));
