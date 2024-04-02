@@ -56,6 +56,8 @@ public class MoneyOutController {
                 }
             } catch (Exception ex) {
                 logger.error("An error occurred when sending money out {}", ex.getMessage());
+                redirectAttributes.addFlashAttribute("sendingErrors", "An error occurred when contacting external bank account");
+                return "redirect:/home?send=true";
             }
         }
         return "redirect:/home";
