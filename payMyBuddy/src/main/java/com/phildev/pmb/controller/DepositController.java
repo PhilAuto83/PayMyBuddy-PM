@@ -12,9 +12,11 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.URI;
 import java.security.Principal;
@@ -32,7 +34,7 @@ public class DepositController {
     private String paymentPlatformUrl;
 
     @PostMapping(value = "/deposit", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String deposit(@Valid @ModelAttribute BankInfo bankInfo, @AuthenticationPrincipal OidcUser oidcUser, Principal principal){
+    public String deposit(@Valid @ModelAttribute BankInfo bankInfo, @AuthenticationPrincipal OidcUser oidcUser, Principal principal, RedirectAttributes redirectAttributes){
         String email = UserInfoUtility.getUserAuthenticatedEmail(oidcUser, principal);
         try{
             RestTemplate restTemplate = new RestTemplate();
@@ -49,11 +51,13 @@ public class DepositController {
                 accountService.depositMoney(bankInfo.getAmount(), email);
                 logger.info("Deposit ended with success!!");
             }else{
-                logger.error("Payment failed when contacting external bank account");
+                logger.error("Payment failed when contacting external bank account with error {}", result.getStatusCode());
+                return "redirect:/home";
             }
         }catch(Exception ex){
+            redirectAttributes.addFlashAttribute("paymentErrors", "An error occurred when contacting external bank account");
             logger.error("An error occurred when contacting external bank account : {}", ex.getMessage());
-           return "redirect:/home";
+           return "redirect:/home?error=true";
         }
         return "redirect:/home";
     }

@@ -36,4 +36,16 @@ public class AccountServiceTest {
         Assertions.assertTrue(accountService.hasSufficientMoney("testee.money@test.fr",20));
     }
 
+    @Test
+    public void testUpdatingAccountForDepositReturnsCorrectBalance() throws Exception {
+        accountService.depositMoney(20.0, "deposit@test.fr");
+        Assertions.assertEquals(620.0, accountRepository.getBalanceByUserEmail("deposit@test.fr"));
+    }
+
+    @Test
+    public void testUpdatingAccountWhenSendingMoneyOut() throws Exception {
+        accountService.sendMoneyOut(50.0, "send@test.fr");
+        Assertions.assertEquals(49.75, accountRepository.getBalanceByUserEmail("send@test.fr"));
+    }
+
 }

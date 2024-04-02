@@ -30,17 +30,21 @@
             Deposit Money
         </button>
     </div>
+    <div th:if="${param.error}"  class="alert alert-danger alert-dismissible col-xl-4 mx-auto text-center mt-2" role="alert">
+        <div th:text="${paymentErrors}"></div>
+        <button type="button" class="close" onclick="displayHomePage()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="depositModalLabel">Deposit Money</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
+
                     <!--    DEPOSIT MONEY FORM-->
                     <div class="p-2 shadow-lg">
                         <form th:object="${bankInfo}" th:action="@{/deposit}" method="post">
@@ -78,15 +82,18 @@
             Send Money Out
         </button>
     </div>
+    <div th:if="${param.send}" class="alert alert-danger alert-dismissible col-xl-4 mx-auto text-center mt-2" role="alert">
+        <div th:text="${sendingErrors}"></div>
+        <button type="button" class="close" onclick="displayHomePage()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <!--  Send Money out Modal -->
     <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="sendModalLabel">Send to external account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <!--   SEND MONEY FORM-->
