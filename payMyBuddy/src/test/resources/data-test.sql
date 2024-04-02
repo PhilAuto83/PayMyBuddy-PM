@@ -18,7 +18,9 @@ VALUES
     ('Tester', 'Cousy','USER','tester.cousy@test.fr','$2a$10$RdwowuvQO2Y25yyfS/KPxevbKbXNGaLROOk7NMrx7GEkOZRqfRufq'),
     ('Testee', 'Money','USER','testee.money@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O'),
     ('Testo', 'Monkey','USER','testo.monkey@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O'),
-    ('Testy', 'Testy','USER','testy@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O');
+    ('Testy', 'Testy','USER','testy@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O'),
+    ('Deposit', 'Test','USER','deposit@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O'),
+    ('Send', 'Test','USER','send@test.fr','$2a$10$YMiVbLOHUtFsmdBasMMjtO7qrmKVHR4a.utE74AuJlOhlnT/W015O');
 
 
 CREATE TABLE account(
@@ -34,7 +36,9 @@ VALUES
     (3, 200.0),
     (4, 70.0),
     (5, 450.0),
-    (6, 300.0);
+    (6, 300.0),
+    (7, 600.0),
+    (8, 100.0);
 
 CREATE TABLE connection(
                            id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
