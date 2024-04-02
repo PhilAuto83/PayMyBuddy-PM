@@ -19,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.security.Principal;
 import java.util.Collections;
-import java.util.Objects;
 
 @Controller
 public class DepositController {

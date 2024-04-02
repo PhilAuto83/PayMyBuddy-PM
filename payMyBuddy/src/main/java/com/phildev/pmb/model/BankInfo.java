@@ -1,7 +1,6 @@
 package com.phildev.pmb.model;
 
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
 
 public class BankInfo {
 

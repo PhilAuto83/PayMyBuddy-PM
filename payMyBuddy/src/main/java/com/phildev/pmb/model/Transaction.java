@@ -4,7 +4,6 @@ package com.phildev.pmb.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
